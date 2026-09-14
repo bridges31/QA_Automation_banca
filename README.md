@@ -135,13 +135,49 @@ diario de lunes a viernes a las 6:00 (hora de Bogota). El reporte queda como
 artefacto por 30 dias; la evidencia de fallas, tambien. Las pruebas de carga
 corren solo en la rama principal o bajo demanda.
 
-## Navegador preinstalado
+## Ejecutar desde VS Code
 
-Si la politica corporativa impide que Playwright descargue sus navegadores:
+Instale la extension oficial **Playwright Test for VSCode** (`ms-playwright.playwright`).
+Agrega un panel de pruebas en la barra lateral desde el que se puede:
+
+- correr una sola prueba o un archivo, sin pasar por la terminal;
+- poner un punto de interrupcion y depurar paso a paso;
+- marcar *Show browser* para ver el navegador mientras corre;
+- abrir la traza de una falla con un clic.
+
+La extension levanta el banco demo por su cuenta, igual que `npm test`.
+
+Requisitos: **Node 20 o superior** (`node -v`).
+
+Las pruebas de carga si necesitan el banco arriba de antemano, en dos terminales:
 
 ```bash
-export PLAYWRIGHT_CHROMIUM_PATH=/ruta/al/chrome
+npm run bank        # terminal 1: queda ocupada
+npm run load:carga  # terminal 2
 ```
+
+## Navegador
+
+En una maquina normal no hay que configurar nada: `npx playwright install chromium`
+descarga el navegador que corresponde a la version de Playwright del proyecto.
+
+La variable `PLAYWRIGHT_CHROMIUM_PATH` es **opcional** y existe solo para maquinas
+donde la politica corporativa impide esa descarga, o para contenedores que ya traen
+un Chromium propio. Si la define apuntando a una version que no corresponde, las
+pruebas pueden fallar por incompatibilidad de protocolo:
+
+```bash
+export PLAYWRIGHT_CHROMIUM_PATH=/ruta/al/chrome   # solo si hace falta
+```
+
+## Si algo falla
+
+| Sintoma | Causa probable | Solucion |
+|---|---|---|
+| `Executable doesn't exist` | Falta el navegador | `npx playwright install chromium` |
+| `EADDRINUSE :4010` | Otro proceso ocupa el puerto | `PUERTO_BANCO=4020 BASE_URL=http://127.0.0.1:4020 npm test` |
+| `El ambiente no responde` al correr carga | El banco demo no esta arriba | `npm run bank` en otra terminal |
+| Pruebas lentas o inestables | Pocos recursos para el paralelismo | `npx playwright test --workers=2` |
 
 ## Convencion de nombres
 
