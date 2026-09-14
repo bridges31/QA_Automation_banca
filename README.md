@@ -135,6 +135,37 @@ diario de lunes a viernes a las 6:00 (hora de Bogota). El reporte queda como
 artefacto por 30 dias; la evidencia de fallas, tambien. Las pruebas de carga
 corren solo en la rama principal o bajo demanda.
 
+## Ver las pruebas ejecutandose
+
+Por defecto **solo se graba video de lo que falla**. Grabarlo todo deja cientos de
+megas de pruebas que pasaron y que nadie va a abrir. Si la corrida salio en verde,
+no hay videos, y eso es lo esperado.
+
+Para verlas, tres opciones segun lo que necesite:
+
+```bash
+npm run test:interactivo   # modo UI: la mejor opcion para explorar y mostrar
+npm run test:headed        # abre el navegador y corre todo a la vista
+npm run test:video         # graba video y traza de TODAS las pruebas
+```
+
+El **modo interactivo** (`--ui`) es el mas util: lista las pruebas, permite correr
+una sola, y da una linea de tiempo donde se ve el antes y el despues de cada
+accion, con el DOM de ese instante y la peticion de red que la acompaño.
+
+`npm run test:video` deja los archivos en `resultados/<nombre-de-la-prueba>/`:
+
+- `video.webm` — la grabacion. Se abre con Chrome, Edge o el mismo VS Code
+  (el Reproductor de Windows no siempre lee webm).
+- `trace.zip` — la traza, mas util que el video. Se abre con:
+
+```bash
+npx playwright show-trace resultados/<carpeta>/trace.zip
+```
+
+Los videos y trazas tambien quedan adjuntos dentro del reporte HTML
+(`npm run report`), en la ficha de cada prueba.
+
 ## Ejecutar desde VS Code
 
 Instale la extension oficial **Playwright Test for VSCode** (`ms-playwright.playwright`).

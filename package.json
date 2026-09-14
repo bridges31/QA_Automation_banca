@@ -4,7 +4,9 @@
   "private": true,
   "description": "Suite de automatizacion QA para banca: UI, API y pruebas de carga",
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "bank": "tsx demo-bank/server.ts",
     "test": "playwright test",
@@ -14,6 +16,8 @@
     "test:smoke": "playwright test --grep @smoke",
     "test:regresion": "playwright test --grep-invert @lento",
     "test:headed": "playwright test --project=ui-chromium --headed",
+    "test:interactivo": "playwright test --ui",
+    "test:video": "cross-env GRABAR_VIDEO=1 playwright test --project=ui-chromium --trace=on",
     "report": "playwright show-report reportes/html",
     "load:smoke": "tsx load/runner.ts --escenario=smoke",
     "load:carga": "tsx load/runner.ts --escenario=carga",
@@ -25,6 +29,7 @@
     "@axe-core/playwright": "^4.10.1",
     "@playwright/test": "^1.50.0",
     "@types/node": "^22.10.0",
+    "cross-env": "^10.1.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }

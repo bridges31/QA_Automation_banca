@@ -44,7 +44,10 @@ export default defineConfig({
     navigationTimeout: 20_000,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    // Por defecto solo se graba video de lo que falla: grabarlo todo deja
+    // cientos de megas de pruebas que pasaron y que nadie va a abrir.
+    // Para grabar una corrida completa: npm run test:video
+    video: process.env.GRABAR_VIDEO === '1' ? 'on' : 'retain-on-failure',
     locale: 'es-CO',
     timezoneId: 'America/Bogota',
     extraHTTPHeaders: { 'x-origen-prueba': 'qa-automation-banca' },
