@@ -1,0 +1,93 @@
+name: QA Automation Banca
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  schedule:
+    # Humo diario a las 6:00 America/Bogota (11:00 UTC).
+    - cron: '0 11 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  funcional:
+    name: Pruebas funcionales (API, UI, accesibilidad)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Verificacion de tipos
+        run: npm run typecheck
+
+      - name: Instalar navegador
+        run: npx playwright install --with-deps chromium
+
+      - name: Ejecutar suite
+        run: npm test
+
+      - name: Publicar reporte
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-playwright
+          path: reportes/
+          retention-days: 30
+
+      - name: Publicar evidencia de fallas
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidencia-fallas
+          path: resultados/
+          retention-days: 30
+
+  carga:
+    name: Prueba de carga
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Solo en la rama principal y bajo demanda: la carga consume tiempo de
+    # ejecutor y no aporta en cada commit.
+    if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Levantar el banco demo
+        run: |
+          npm run bank &
+          for intento in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:4010/api/health > /dev/null; then
+              echo "Banco demo disponible"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "El banco demo no respondio en 30 segundos" >&2
+          exit 1
+
+      - name: Escenario de carga
+        run: npm run load:carga
+
+      - name: Publicar metricas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: metricas-carga
+          path: reportes/carga-*.json
+          retention-days: 90

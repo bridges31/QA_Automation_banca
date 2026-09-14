@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Banco Demo - Apertura de cuenta</title>
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+  <header><h1>Banco Demo</h1></header>
+  <main>
+    <section class="tarjeta" aria-labelledby="titulo-registro" style="max-width:640px;margin:32px auto">
+      <h2 id="titulo-registro">Apertura de cuenta de ahorros</h2>
+      <div id="mensaje" class="mensaje oculto" role="alert" data-test="mensaje"></div>
+      <form id="formulario-registro" novalidate>
+        <div class="rejilla">
+          <div class="campo">
+            <label for="nombre">Nombre completo</label>
+            <input id="nombre" data-test="campo-nombre">
+            <span class="error-campo oculto" data-error="nombre" data-test="error-nombre"></span>
+          </div>
+          <div class="campo">
+            <label for="documento">Documento de identidad</label>
+            <input id="documento" data-test="campo-documento" inputmode="numeric">
+            <span class="error-campo oculto" data-error="documento" data-test="error-documento"></span>
+          </div>
+          <div class="campo">
+            <label for="fechaNacimiento">Fecha de nacimiento</label>
+            <input id="fechaNacimiento" type="date" data-test="campo-fecha-nacimiento">
+            <span class="error-campo oculto" data-error="fechaNacimiento" data-test="error-fecha-nacimiento"></span>
+          </div>
+          <div class="campo">
+            <label for="correo">Correo electronico</label>
+            <input id="correo" type="email" data-test="campo-correo">
+            <span class="error-campo oculto" data-error="correo" data-test="error-correo"></span>
+          </div>
+          <div class="campo">
+            <label for="usuarioNuevo">Usuario</label>
+            <input id="usuarioNuevo" data-test="campo-usuario">
+            <span class="error-campo oculto" data-error="usuario" data-test="error-usuario"></span>
+          </div>
+          <div class="campo">
+            <label for="claveNueva">Clave</label>
+            <input id="claveNueva" type="password" data-test="campo-clave">
+            <span class="error-campo oculto" data-error="clave" data-test="error-clave"></span>
+          </div>
+        </div>
+        <button type="submit" data-test="boton-registrar">Abrir cuenta</button>
+        <a href="/" style="margin-left:14px" data-test="enlace-volver">Volver al ingreso</a>
+      </form>
+    </section>
+  </main>
+  <script type="module" src="/registro.js"></script>
+</body>
+</html>

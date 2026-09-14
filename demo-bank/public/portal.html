@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Banco Demo - Portal</title>
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+  <header>
+    <h1>Banco Demo</h1>
+    <div>
+      <span data-test="nombre-cliente" id="nombre-cliente"></span>
+      <button class="secundario" id="boton-salir" data-test="boton-salir" style="margin-left:12px">Cerrar sesion</button>
+    </div>
+  </header>
+  <main>
+    <div id="mensaje" class="mensaje oculto" role="alert" data-test="mensaje"></div>
+
+    <nav class="pestanas" role="tablist" aria-label="Secciones del portal">
+      <button role="tab" data-panel="panel-cuentas" aria-selected="true" data-test="pestana-cuentas">Cuentas</button>
+      <button role="tab" data-panel="panel-transferencia" aria-selected="false" data-test="pestana-transferencia">Transferencias</button>
+      <button role="tab" data-panel="panel-pagos" aria-selected="false" data-test="pestana-pagos">Pago de servicios</button>
+    </nav>
+
+    <section class="tarjeta" id="panel-cuentas" role="tabpanel" aria-labelledby="titulo-cuentas">
+      <h2 id="titulo-cuentas">Mis productos</h2>
+      <table data-test="tabla-cuentas">
+        <thead>
+          <tr><th>Cuenta</th><th>Tipo</th><th class="valor">Saldo disponible</th><th></th></tr>
+        </thead>
+        <tbody id="cuerpo-cuentas"></tbody>
+      </table>
+      <div id="bloque-movimientos" class="oculto" style="margin-top:22px">
+        <h2 id="titulo-movimientos">Movimientos de <span data-test="cuenta-movimientos" id="cuenta-movimientos"></span></h2>
+        <table data-test="tabla-movimientos">
+          <thead><tr><th>Fecha</th><th>Descripcion</th><th class="valor">Valor</th></tr></thead>
+          <tbody id="cuerpo-movimientos"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="tarjeta oculto" id="panel-transferencia" role="tabpanel" aria-labelledby="titulo-transferencia">
+      <h2 id="titulo-transferencia">Transferencia de fondos</h2>
+      <form id="formulario-transferencia" novalidate>
+        <div class="rejilla">
+          <div class="campo">
+            <label for="cuenta-origen">Cuenta origen</label>
+            <select id="cuenta-origen" data-test="select-origen"></select>
+          </div>
+          <div class="campo">
+            <label for="cuenta-destino">Cuenta destino</label>
+            <input id="cuenta-destino" data-test="campo-destino" inputmode="numeric" placeholder="10 digitos">
+          </div>
+          <div class="campo">
+            <label for="valor-transferencia">Valor (COP)</label>
+            <input id="valor-transferencia" data-test="campo-valor" inputmode="numeric" placeholder="0">
+          </div>
+        </div>
+        <button type="submit" data-test="boton-transferir">Transferir</button>
+      </form>
+      <div id="comprobante" class="oculto" style="margin-top:18px" data-test="comprobante">
+        <h2>Comprobante</h2>
+        <table>
+          <tbody>
+            <tr><th>Numero</th><td data-test="comprobante-id"></td></tr>
+            <tr><th>Valor</th><td class="valor" data-test="comprobante-valor"></td></tr>
+            <tr><th>GMF 4x1000</th><td class="valor" data-test="comprobante-gmf"></td></tr>
+            <tr><th>Total debitado</th><td class="valor" data-test="comprobante-total"></td></tr>
+            <tr><th>Saldo resultante</th><td class="valor" data-test="comprobante-saldo"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="tarjeta oculto" id="panel-pagos" role="tabpanel" aria-labelledby="titulo-pagos">
+      <h2 id="titulo-pagos">Pago de servicios</h2>
+      <form id="formulario-pago" novalidate>
+        <div class="rejilla">
+          <div class="campo">
+            <label for="cuenta-pago">Cuenta debito</label>
+            <select id="cuenta-pago" data-test="select-cuenta-pago"></select>
+          </div>
+          <div class="campo">
+            <label for="convenio">Convenio</label>
+            <select id="convenio" data-test="select-convenio"></select>
+          </div>
+          <div class="campo">
+            <label for="referencia">Referencia de pago</label>
+            <input id="referencia" data-test="campo-referencia">
+          </div>
+          <div class="campo">
+            <label for="valor-pago">Valor (COP)</label>
+            <input id="valor-pago" data-test="campo-valor-pago" inputmode="numeric">
+          </div>
+        </div>
+        <button type="submit" data-test="boton-pagar">Pagar</button>
+      </form>
+    </section>
+  </main>
+  <script type="module" src="/portal.js"></script>
+</body>
+</html>

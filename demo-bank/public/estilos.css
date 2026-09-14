@@ -1,0 +1,86 @@
+:root {
+  --tinta: #10233f;
+  --tinta-suave: #4a5c78;
+  --linea: #d7dee9;
+  --fondo: #f4f6fa;
+  --acento: #0a5bd3;
+  --error: #b3261e;
+  --exito: #10653a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--fondo);
+  color: var(--tinta);
+}
+header {
+  background: var(--tinta);
+  color: #fff;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+header h1 { font-size: 1.15rem; margin: 0; letter-spacing: 0.02em; }
+main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+.tarjeta {
+  background: #fff;
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+h2 { font-size: 1rem; margin: 0 0 14px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tinta-suave); }
+label { display: block; font-size: 0.85rem; margin-bottom: 4px; color: var(--tinta-suave); }
+input, select {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--linea);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: #fff;
+  color: var(--tinta);
+}
+input:focus, select:focus, button:focus-visible { outline: 2px solid var(--acento); outline-offset: 1px; }
+.campo { margin-bottom: 14px; }
+.rejilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+button {
+  background: var(--acento);
+  color: #fff;
+  border: 0;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+button.secundario { background: transparent; color: var(--acento); border: 1px solid var(--acento); }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--linea); }
+th { color: var(--tinta-suave); font-weight: 600; }
+td.valor { text-align: right; font-variant-numeric: tabular-nums; }
+.mensaje { padding: 11px 14px; border-radius: 6px; margin-bottom: 14px; font-size: 0.92rem; }
+.mensaje.error { background: #fdeceb; color: var(--error); border: 1px solid #f3c9c6; }
+.mensaje.exito { background: #e7f4ed; color: var(--exito); border: 1px solid #bfe0cd; }
+.error-campo { color: var(--error); font-size: 0.8rem; margin-top: 4px; display: block; }
+.oculto { display: none !important; }
+nav.pestanas { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+nav.pestanas button { background: #fff; color: var(--tinta-suave); border: 1px solid var(--linea); }
+nav.pestanas button[aria-selected="true"] { background: var(--acento); color: #fff; border-color: var(--acento); }
+.acceso { max-width: 380px; margin: 56px auto; }
+.pie { font-size: 0.8rem; color: var(--tinta-suave); text-align: center; margin-top: 28px; }
+a { color: var(--acento); }
+
+/*
+ * El boton secundario sobre el encabezado oscuro necesita su propia paleta:
+ * el azul de acento contra el fondo #10233f da 2.58:1 y WCAG 2.1 AA exige 4.5:1.
+ */
+header button.secundario {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.65);
+}
+header button.secundario:hover {
+  background: rgba(255, 255, 255, 0.12);
+}

@@ -1,0 +1,9 @@
+node_modules/
+reportes/
+resultados/
+test-results/
+playwright-report/
+blob-report/
+.env
+*.log
+.DS_Store
